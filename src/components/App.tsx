@@ -1,10 +1,10 @@
-import React, {FC, useEffect, useRef, useState} from 'react'
+import React, {FC, useRef, useState} from 'react'
 import '../styles/style.css'
 import { Preview } from './Preview'
 
 export const App: FC = () => {
 
-  const fileInput = useRef<HTMLInputElement>()
+  const fileInput = useRef<any>()
   const [image, setImage] = useState<File>()
   const [isPreview, setIsPreview] = useState<boolean>(false)
 
@@ -65,7 +65,7 @@ export const App: FC = () => {
       onClick={(event) => triggerInput()}
 
     >
-      {/*<input type="file" ref={fileInput} onChange={ event => onLoadHandler(event) } style={{display: "none"}}/>*/}
+      <input type="file" ref={fileInput} onChange={ event => onLoadHandler(event) } style={{display: "none"}}/>
       {isPreview && <Preview children={image} />}
     </form>
   )

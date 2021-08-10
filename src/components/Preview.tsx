@@ -47,6 +47,7 @@ export const Preview: FC = observer( (children) => {
     const getDivList = () => {
       let markerList = divArray.map((el,index)=> {
 
+        // альтернативное решение
         // const targetCoords = parentRef.getBoundingClientRect();
         //
         // const x = event.clientX - targetCoords.left;
