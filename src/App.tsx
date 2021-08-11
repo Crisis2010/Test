@@ -1,6 +1,6 @@
 import React, { FC, useRef, useState } from 'react';
 import { Preview } from './components/Preview';
-import '../styles/style.css';
+import './styles/style.css';
 
 export const App: FC = () => {
   const fileInput = useRef<any>();
