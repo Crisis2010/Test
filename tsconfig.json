@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "es6",
     "module": "ESNext",
     "moduleResolution": "node",
     "lib": [
@@ -13,11 +13,13 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "importsNotUsedAsValues": "error",
     "resolveJsonModule": true,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noFallthroughCasesInSwitch": true,
-    "strict": true
+    "strict": true,
+    "baseUrl": "./src"
   },
   "include": [
     "src/**/*"

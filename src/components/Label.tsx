@@ -1,22 +1,22 @@
-import React, {FC} from 'react';
+import type React from 'react';
 
 type LabelProps = {
-  el: any
-  containerMouseEnter: any
-  containerMouseLeave: any
-  inputChange: ()=>void
-}
+  el: any;
+  containerMouseEnter: any;
+  containerMouseLeave: any;
+  inputChange: () => void;
+};
 
-export const Label: FC<any> = ({data, containerMouseEnter, containerMouseLeave, inputChange}) => {
-  console.log(data)
+export const Label: React.FC<any> = ({ data, containerMouseEnter, containerMouseLeave, inputChange }) => {
+  console.log(data);
   return (
-      <div
-        onMouseEnter={containerMouseEnter}
-        onMouseLeave={containerMouseLeave}
-        key={data.key}
-        style={{position:"absolute", top:data.y, left: data.x}}
-      >
-        {data.clicked ? <div>{data.text}</div> : <input onChange={inputChange} type="text" value={data.text}></input>}
-      </div>
+    <div
+      onMouseEnter={containerMouseEnter}
+      onMouseLeave={containerMouseLeave}
+      key={data.key}
+      style={{ position: 'absolute', top: data.y, left: data.x }}
+    >
+      {data.clicked ? <div>{data.text}</div> : <input onChange={inputChange} type="text" value={data.text}></input>}
+    </div>
   );
 };
