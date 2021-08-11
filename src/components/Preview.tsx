@@ -1,5 +1,8 @@
-import React, {FC, useEffect, useRef, useState} from 'react'
+import React, {FC, useLayoutEffect, useEffect, useRef, useState} from 'react'
 import {observer} from "mobx-react-lite";
+import { Label } from './Label';
+import {useWindowSize} from "../hooks/useWindowSize";
+import {customId} from "../hooks/customId";
 
 type Image = {
   image: string
@@ -17,20 +20,18 @@ export const Preview: FC = observer( (children) => {
 
   const [image, setImage] = useState<any>(children.children)
   const [preview, setPreview] = useState<string | null>()
-  const [dimensions, setDimensions] = useState<DOMRect | undefined>();
-  const [divArray, setDivArray] = useState<Label[] | []>([]);
+  const [divArray, setDivArray] = useState<any>([]);
   const parentRef = useRef<any>();
   const elementRef = useRef<any>();
+  const [size, setSize] = useWindowSize()
 
-    const imageClick = (e: any) => {
-      let rect = e.target.getBoundingClientRect();
-      let x = e.clientX;
-      let y = e.clientY;
-      let elem = { key:( Date.now()+~~(1000*Math.random()) ) , x, y, text: "test", clicked: false };
-      console.log(elem)
-      setDivArray([...divArray, elem])
-
-    }
+  const imageClick = (e: any) => {
+    let rect = e.target.getBoundingClientRect();
+    let x = e.clientX - rect.left;;
+    let y = e.clientY - rect.top;
+    let elem = { key: customId, x, y, text: "test", clicked: false };
+    setDivArray([...divArray, elem])
+  }
 
   useEffect(() => {
     if (children.children) {
@@ -44,8 +45,9 @@ export const Preview: FC = observer( (children) => {
     }
   }, [children])
 
+  
     const getDivList = () => {
-      let markerList = divArray.map((el,index)=> {
+      let markerList = divArray.map((el: any, index: number)=> {
 
         // альтернативное решение
         // const targetCoords = parentRef.getBoundingClientRect();
@@ -55,7 +57,6 @@ export const Preview: FC = observer( (children) => {
         //
         // label.style.left = (x / (el.clientWidth / 100)) + '%';
         // label.style.top = (y / (el.clientHeight / 100)) + '%';
-
 
         const inputChange = (e: any) => {
           let newList = [...divArray];
@@ -75,20 +76,17 @@ export const Preview: FC = observer( (children) => {
           setDivArray(newList)
         }
 
-        let div = (<div>{el.text}</div>);
-        let input = (<input onChange={inputChange} type="text" value={el.text}></input>);
-        let container = <div onMouseEnter={containerMouseEnter}
-                             onMouseLeave={containerMouseLeave}
-                             key={el.key}
-                             style={{position:"absolute", top:el.y, left: el.x}}>{el.clicked? input: div}
-        </div>
-        return container
+        return <Label
+                  onMouseEnter={containerMouseEnter}
+                  onMouseLeave={containerMouseLeave}
+                  data={el}
+                />
       });
       return markerList
     }
 
   return (
-    <div className={'img-wrap'} onDoubleClick={imageClick} ref={parentRef}>
+    <div className={'img-wrap'} onDoubleClick={imageClick} ref={parentRef} >
       <img src={preview as string} alt="123" ref={elementRef} />
       <button className={'button-preview'}>
         Удалить
@@ -98,3 +96,4 @@ export const Preview: FC = observer( (children) => {
   )
 }
 )
+
